@@ -1,17 +1,14 @@
 import { styles } from "./SongSearchStyles.js"
 
-export function SongSearch({searchTerm, searchSuggestions, onChange}) {
+export function SongSearch({searchTerm, searchSuggestions, onChange, onFocus, inputNumber}) {
   return (
     <div>
       <h1>Song Search</h1>
-      <input type="text" list="song-selection-data" value={searchTerm} onChange={onChange} style={styles}></input>
-
-      {/* <datalist id="song-selection-data">
-        <option value="A" />
-      </datalist> */}
-
-      <datalist id="song-selection-data">
+      <input autoComplete="off" id={inputNumber} type="text" list={`song-selection-data-${inputNumber}`} value={searchTerm} onChange={onChange} onFocus={onFocus} style={styles}></input>
+      
+      <datalist id={`song-selection-data-${inputNumber}`}>
         {searchSuggestions.map(suggestion => {
+          // console.log(suggestion);
           return <option key={suggestion} value={suggestion} />
         })}
       </datalist>

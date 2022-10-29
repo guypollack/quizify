@@ -9,8 +9,10 @@ function App() {
   const [artistSearchTerm, setArtistSearchTerm] = useState("");
   const [artistSearchSuggestions, setArtistSearchSuggestions] = useState([]);
 
-  const [songSearchTerm, setSongSearchTerm] = useState("");
-  const [songSearchSuggestions, setSongSearchSuggestions] = useState([]);
+  const [songSearchTerms, setSongSearchTerms] = useState({1:"", 2: "", 3: "", 4: "", 5: ""});
+  const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
+
+  const [currentSongInput, setCurrentSongInput] = useState(1);
 
   useEffect(() => {
     Spotify.getAccessToken()
@@ -27,55 +29,34 @@ function App() {
     }
   },[artistSearchTerm]);
 
-  // useEffect(() => {
-  //   // console.log(songSearchTerm);
-  //   if (artistSearchTerm && songSearchTerm) {
-  //     Spotify.search("track",songSearchTerm)
-  //       .then(searchResults => searchResults.tracks.items)
-  //       // .then(items => {
-  //       //   console.log(items);
-  //       // })
-  //       // .then (items => items.forEach(item => {
-  //       //   console.log(item.artists[0].name)
-  //       // }))
-  //       .then(items => items.filter(item => item.artists[0].name === artistSearchTerm))
-  //       // .then(filteredItems => {
-  //       //   console.log(filteredItems);
-  //       // })
-  //       .then(filteredItems => {
-  //         // console.log(filteredItems);
-  //         return filteredItems.map(song => song.name)
-  //       })
-  //       .then(songs => songs.slice(0))
-  //       .then(reducedSongs => reducedSongs.filter((value, index, self) => self.indexOf(value) === index))
-  //       .then(dedupedSongs => setSongSearchSuggestions(dedupedSongs));
-  //   }
-  // },[songSearchTerm]);
-
-  useEffect(() => {
-    // console.log(songSearchTerm);
-    if (artistSearchTerm && songSearchTerm) {
-      Spotify.songSearch(songSearchTerm,artistSearchTerm)
-        // .then(searchResults => {
-        //   console.log(searchResults);
-        // })
+  function updateSongSearchSuggestions(index) {
+    if (artistSearchTerm && songSearchTerms[index]) {
+      Spotify.songSearch(songSearchTerms[index],artistSearchTerm)
         .then(searchResults => searchResults.tracks.items)
-        // .then(items => items.filter(item => item.artists[0].name === artistSearchTerm))
         .then(filteredItems => {
           return filteredItems.map(song => song.name)
         })
         .then(songs => songs.slice(0,10))
         .then(reducedSongs => reducedSongs.filter((value, index, self) => self.indexOf(value) === index))
-        .then(dedupedSongs => setSongSearchSuggestions(dedupedSongs));
+        .then(dedupedSongs => setSongSearchSuggestions(prev => ({...prev, [index]: dedupedSongs})));
     } else {
-      setSongSearchSuggestions([]);
+      setSongSearchSuggestions(prev => ({...prev, [index]: []}));
+      // setSongSearchSuggestions(prev => ({...prev}));
     }
-  },[artistSearchTerm, songSearchTerm]);
+  }
+
+  useEffect(() => {
+    updateSongSearchSuggestions(currentSongInput);
+  },[songSearchTerms]);
+
+  useEffect(() => {
+    Object.keys(songSearchSuggestions).forEach(index => updateSongSearchSuggestions(index));
+  },[artistSearchTerm]);
 
   return (
     <div>
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} />
-      <SongSearchContainer searchTerm={songSearchTerm} setSearchTerm={setSongSearchTerm} searchSuggestions={songSearchSuggestions} />
+      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} />
     </div>
   )
 }
