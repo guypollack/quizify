@@ -1,0 +1,8 @@
+.artist-search {
+  width: fit-content;
+  color: blue;
+  position: relative;
+  top: 200px;
+  left: 200px;
+  /* border: 1px solid black; */
+}
