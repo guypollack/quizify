@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { ArtistSearchContainer } from "./Components/ArtistSearch/ArtistSearchContainer";
 import { SongSearchContainer } from "./Components/SongSearch/SongSearchContainer";
+import { Warnings } from "./Components/Warnings/Warnings.js";
 import Spotify from "./Utilities/Spotify/Spotify.js";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const [currentSongInput, setCurrentSongInput] = useState(1);
 
   const [containsBlanks, setContainsBlanks] = useState(true);
+  const [containsDuplicates, setContainsDuplicates] = useState(true);
 
   useEffect(() => {
     Spotify.getAccessToken()
@@ -82,6 +84,10 @@ function App() {
     setContainsBlanks([artistSearchTerm, ...Object.values(songSearchTerms)].includes(""));
   },[artistSearchTerm,songSearchTerms]);
 
+  useEffect(() => {
+    setContainsDuplicates(Object.values(songSearchTerms).filter((value, index, self) => self.indexOf(value) === index).length < 5);
+  },[songSearchTerms])
+
   function handleSubmit(e) {
     e.preventDefault();
     alert("Quack");
@@ -89,9 +95,11 @@ function App() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Contains Blanks: {containsBlanks.toString()}</h1>
+      {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
+      {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
       <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} />
+      <Warnings blanks={containsBlanks} dupes={containsDuplicates} />
       <button type="submit">Submit</button>
     </form>
   )
