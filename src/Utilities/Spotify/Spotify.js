@@ -44,6 +44,15 @@ const Spotify = {
       .then(response => {
         return response.json();
       })
+  },
+  getTopTracks(id) {
+    const headers = { Authorization: `Bearer ${Spotify.getAccessToken()}` };
+
+    return fetch(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=GB`, {headers: headers})
+      .then(response => {
+        // console.log(response.json());
+        return response.json();
+      })
   }
 };
 

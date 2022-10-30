@@ -9,6 +9,10 @@ function App() {
   const [artistSearchTerm, setArtistSearchTerm] = useState("");
   const [artistSearchSuggestions, setArtistSearchSuggestions] = useState([]);
 
+  const [artistId, setArtistId] = useState(null);
+
+  const [topTracks, setTopTracks] = useState([]);
+
   const [songSearchTerms, setSongSearchTerms] = useState({1:"", 2: "", 3: "", 4: "", 5: ""});
   const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
 
@@ -22,12 +26,28 @@ function App() {
     if (artistSearchTerm) {
       Spotify.search("artist",artistSearchTerm)
         .then(searchResults => searchResults.artists.items)
+        .then(items => {
+          setArtistId(items[0].id);
+          return items;
+        })
+        // .then(items => {
+        //   console.log(artistId);
+        //   return items;
+        // })
         .then(items => items.map(artist => artist.name))
         .then(artists => artists.slice(0,10))
         .then(reducedArtists => reducedArtists.filter((value, index, self) => self.indexOf(value) === index))
         .then(dedupedArtists => setArtistSearchSuggestions(dedupedArtists));
     }
   },[artistSearchTerm]);
+
+  useEffect(() => {
+    if (!artistId) return;
+    Spotify.getTopTracks(artistId)
+      .then(response => response.tracks)
+      .then(tracks => tracks.map(track => track.name).slice(0,5))
+      .then(reducedTracks => setTopTracks(reducedTracks));
+  },[artistId]);
 
   function updateSongSearchSuggestions(index) {
     if (artistSearchTerm && songSearchTerms[index]) {
