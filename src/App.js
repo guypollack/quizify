@@ -14,6 +14,7 @@ function App() {
 
   const [topTracks, setTopTracks] = useState([]);
   const [marks, setMarks] = useState({1: "", 2: "", 3: "", 4: "", 5: ""});
+  const [score, setScore] = useState(0);
 
   const [songSearchTerms, setSongSearchTerms] = useState({1:"", 2: "", 3: "", 4: "", 5: ""});
   const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
@@ -82,15 +83,37 @@ function App() {
     Object.keys(songSearchSuggestions).forEach(index => updateSongSearchSuggestions(index));
   },[artistSearchTerm]);
 
+  function markAnswers() {
+    Object.keys(songSearchTerms).forEach(index => {
+      // alert("index");
+      setTimeout(() => {
+        console.log(index);
+        if (topTracks[index-1] === songSearchTerms[index]) {
+          setMarks(prev => ({...prev, [index]: "correct"}));
+          setScore(prev => prev + 3);
+        } else if (topTracks.includes(songSearchTerms[index])) {
+          setMarks(prev => ({...prev, [index]: "wrong-place"}));
+          setScore(prev => prev + 1);
+        } else {
+          setMarks(prev => ({...prev, [index]: "incorrect"}));
+        }
+      }, 1000 * index);
+    })
+  }
+
   useEffect(() => {
-    if (topTracks[currentSongInput-1] === songSearchTerms[currentSongInput]) {
-      marks[currentSongInput] = "correct";
-    } else if (topTracks.includes(songSearchTerms[currentSongInput])) {
-      marks[currentSongInput] = "wrong-place";
-    } else {
-      marks[currentSongInput] = "incorrect";
-    }
-  },[songSearchTerms]);
+    return;
+  }, [marks])
+
+  // useEffect(() => {
+  //   if (topTracks[currentSongInput-1] === songSearchTerms[currentSongInput]) {
+  //     marks[currentSongInput] = "correct";
+  //   } else if (topTracks.includes(songSearchTerms[currentSongInput])) {
+  //     marks[currentSongInput] = "wrong-place";
+  //   } else {
+  //     marks[currentSongInput] = "incorrect";
+  //   }
+  // },[songSearchTerms]);
 
   useEffect(() => {
     setContainsBlanks([artistSearchTerm, ...Object.values(songSearchTerms)].includes(""));
@@ -111,11 +134,13 @@ function App() {
     if (!(containsBlanks || containsDuplicates)) {
       // Insert code for marking
       alert("Now marking");
+      markAnswers();
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Score: {score}</h1>
       {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
       {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
