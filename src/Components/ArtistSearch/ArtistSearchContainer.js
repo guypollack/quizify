@@ -1,13 +1,13 @@
 import { ArtistSearch } from "./ArtistSearch.js";
 import "./ArtistSearchContainer.css";
 
-export function ArtistSearchContainer({searchTerm, setSearchTerm, searchSuggestions}) {
+export function ArtistSearchContainer({searchTerm, setSearchTerm, searchSuggestions, show}) {
   function handleChange({target}) {
     setSearchTerm(target.value);
   }
   return (
     <div className="artist-search">
-      <ArtistSearch searchTerm={searchTerm} searchSuggestions={searchSuggestions} onChange={handleChange} />
+      <ArtistSearch searchTerm={searchTerm} searchSuggestions={searchSuggestions} show={show} onChange={handleChange} />
     </div>
   )
 };

@@ -1,10 +1,11 @@
 import { styles } from "./ArtistSearchStyles.js"
 
-export function ArtistSearch({searchTerm, searchSuggestions, onChange}) {
+export function ArtistSearch({searchTerm, searchSuggestions, show, onChange}) {
   return (
     <div>
       <h1>Artist Search</h1>
-      <input type="text" list="artist-selection-data" value={searchTerm} onChange={onChange} style={styles}></input>
+      {/* <h2>{show.toString()}</h2> */}
+      <input type="text" list={show ? "artist-selection-data" : null} value={searchTerm} onChange={onChange} style={styles}></input>
 
       <datalist id="artist-selection-data">
         {searchSuggestions.map(suggestion => {

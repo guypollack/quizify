@@ -8,6 +8,7 @@ import Spotify from "./Utilities/Spotify/Spotify.js";
 function App() {
   const [artistSearchTerm, setArtistSearchTerm] = useState("");
   const [artistSearchSuggestions, setArtistSearchSuggestions] = useState([]);
+  const [showArtistSuggestions, setShowArtistSuggestions] = useState(true);
 
   const [artistId, setArtistId] = useState(null);
 
@@ -15,6 +16,7 @@ function App() {
 
   const [songSearchTerms, setSongSearchTerms] = useState({1:"", 2: "", 3: "", 4: "", 5: ""});
   const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
+  const [showSongSuggestions, setShowSongSuggestions] = useState({1: true, 2: true, 3: true, 4: true, 5: true});
 
   const [currentSongInput, setCurrentSongInput] = useState(1);
 
@@ -24,7 +26,7 @@ function App() {
 
   useEffect(() => {
     if (artistSearchTerm) {
-      Spotify.search("artist",artistSearchTerm)
+      Spotify.search("artist", artistSearchTerm)
         .then(searchResults => searchResults.artists.items)
         .then(items => {
           setArtistId(items[0].id);
@@ -37,9 +39,15 @@ function App() {
         .then(items => items.map(artist => artist.name))
         .then(artists => artists.slice(0,10))
         .then(reducedArtists => reducedArtists.filter((value, index, self) => self.indexOf(value) === index))
-        .then(dedupedArtists => setArtistSearchSuggestions(dedupedArtists));
+        .then(dedupedArtists => dedupedArtists.filter(artistName => artistName.toLowerCase().includes(artistSearchTerm.toLowerCase())))
+        .then(refinedArtists => setArtistSearchSuggestions(refinedArtists));
     }
   },[artistSearchTerm]);
+
+  useEffect(() => {
+    // console.log(artistSearchSuggestions.length);
+    setShowArtistSuggestions(!(artistSearchSuggestions.length === 1 && artistSearchTerm === artistSearchSuggestions[0]));
+  },[artistSearchTerm])
 
   useEffect(() => {
     if (!artistId) return;
@@ -53,8 +61,8 @@ function App() {
     if (artistSearchTerm && songSearchTerms[index]) {
       Spotify.songSearch(songSearchTerms[index],artistSearchTerm)
         .then(searchResults => searchResults.tracks.items)
-        .then(filteredItems => {
-          return filteredItems.map(song => song.name)
+        .then(items => {
+          return items.map(song => song.name)
         })
         .then(songs => songs.slice(0,10))
         .then(reducedSongs => reducedSongs.filter((value, index, self) => self.indexOf(value) === index))
@@ -75,7 +83,7 @@ function App() {
 
   return (
     <div>
-      <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} />
+      <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
       <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} />
     </div>
   )
