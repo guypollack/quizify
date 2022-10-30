@@ -13,6 +13,7 @@ function App() {
   const [artistId, setArtistId] = useState(null);
 
   const [topTracks, setTopTracks] = useState([]);
+  const [marks, setMarks] = useState({1: "", 2: "", 3: "", 4: "", 5: ""});
 
   const [songSearchTerms, setSongSearchTerms] = useState({1:"", 2: "", 3: "", 4: "", 5: ""});
   const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
@@ -82,6 +83,16 @@ function App() {
   },[artistSearchTerm]);
 
   useEffect(() => {
+    if (topTracks[currentSongInput-1] === songSearchTerms[currentSongInput]) {
+      marks[currentSongInput] = "correct";
+    } else if (topTracks.includes(songSearchTerms[currentSongInput])) {
+      marks[currentSongInput] = "wrong-place";
+    } else {
+      marks[currentSongInput] = "incorrect";
+    }
+  },[songSearchTerms]);
+
+  useEffect(() => {
     setContainsBlanks([artistSearchTerm, ...Object.values(songSearchTerms)].includes(""));
   },[artistSearchTerm,songSearchTerms]);
 
@@ -108,7 +119,7 @@ function App() {
       {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
       {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
-      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} />
+      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} />
       {showWarnings && <Warnings blanks={containsBlanks} dupes={containsDuplicates} />}
       <button type="submit">Submit</button>
     </form>
