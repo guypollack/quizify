@@ -21,6 +21,7 @@ function App() {
 
   const [containsBlanks, setContainsBlanks] = useState(true);
   const [containsDuplicates, setContainsDuplicates] = useState(true);
+  const [showWarnings, setShowWarnings] = useState(false);
 
   useEffect(() => {
     Spotify.getAccessToken()
@@ -88,9 +89,18 @@ function App() {
     setContainsDuplicates(Object.values(songSearchTerms).filter((value, index, self) => self.indexOf(value) === index).length < 5);
   },[songSearchTerms])
 
+  useEffect(() => {
+    setShowWarnings(false);
+  },[artistSearchTerm])
+
   function handleSubmit(e) {
     e.preventDefault();
-    alert("Quack");
+    // alert("Quack");
+    setShowWarnings(true);
+    if (!(containsBlanks || containsDuplicates)) {
+      // Insert code for marking
+      alert("Now marking");
+    }
   }
 
   return (
@@ -99,7 +109,7 @@ function App() {
       {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
       <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} />
-      <Warnings blanks={containsBlanks} dupes={containsDuplicates} />
+      {showWarnings && <Warnings blanks={containsBlanks} dupes={containsDuplicates} />}
       <button type="submit">Submit</button>
     </form>
   )
