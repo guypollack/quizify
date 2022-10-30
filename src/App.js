@@ -9,7 +9,6 @@ function App() {
   const [artistSearchTerm, setArtistSearchTerm] = useState("");
   const [artistSearchSuggestions, setArtistSearchSuggestions] = useState([]);
   const [showArtistSuggestions, setShowArtistSuggestions] = useState(true);
-
   const [artistId, setArtistId] = useState(null);
 
   const [topTracks, setTopTracks] = useState([]);
@@ -17,8 +16,9 @@ function App() {
   const [songSearchTerms, setSongSearchTerms] = useState({1:"", 2: "", 3: "", 4: "", 5: ""});
   const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
   const [showSongSuggestions, setShowSongSuggestions] = useState({1: true, 2: true, 3: true, 4: true, 5: true});
-
   const [currentSongInput, setCurrentSongInput] = useState(1);
+
+  const [containsBlanks, setContainsBlanks] = useState(true);
 
   useEffect(() => {
     Spotify.getAccessToken()
@@ -78,11 +78,22 @@ function App() {
     Object.keys(songSearchSuggestions).forEach(index => updateSongSearchSuggestions(index));
   },[artistSearchTerm]);
 
+  useEffect(() => {
+    setContainsBlanks([artistSearchTerm, ...Object.values(songSearchTerms)].includes(""));
+  })
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert("Quack");
+  }
+
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
+      <h1>Contains Blanks: {containsBlanks.toString()}</h1>
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
       <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} />
-    </div>
+      <button type="submit">Submit</button>
+    </form>
   )
 }
 

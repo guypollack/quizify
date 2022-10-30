@@ -6,7 +6,11 @@ export function SongSearchContainer({searchTerms, setSearchTerms, searchSuggesti
     setCurrentSongInput(Number(target.id));
   }
   function handleChange({target}) {
-    setSearchTerms(prev => ({...prev, [currentSongInput]: target.value}));
+    if (target.value !== " ") {
+      setSearchTerms(prev => ({...prev, [currentSongInput]: target.value}));
+    } else {
+      setSearchTerms(prev => ({...prev, [currentSongInput]: ""}));
+    }
   }
   return (
     <div className="song-search">

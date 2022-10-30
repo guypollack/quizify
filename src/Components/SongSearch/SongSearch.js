@@ -1,7 +1,6 @@
 import { styles } from "./SongSearchStyles.js"
 
 export function SongSearch({searchTerm, searchSuggestions, onChange, onFocus, inputNumber, show}) {
-  // console.log("I have rendered");
   return (
     <div>
       <h1>Song Search</h1>
