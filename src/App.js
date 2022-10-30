@@ -11,6 +11,7 @@ function App() {
   const [artistSearchSuggestions, setArtistSearchSuggestions] = useState([]);
   const [showArtistSuggestions, setShowArtistSuggestions] = useState(true);
   const [artistId, setArtistId] = useState(null);
+  const [previousArtists, setPreviousArtists] = useState([]);
 
   const [topTracks, setTopTracks] = useState([]);
   const [marks, setMarks] = useState({1: "", 2: "", 3: "", 4: "", 5: ""});
@@ -23,6 +24,7 @@ function App() {
 
   const [containsBlanks, setContainsBlanks] = useState(true);
   const [containsDuplicates, setContainsDuplicates] = useState(true);
+  const [previousArtistSelected, setPreviousArtistSelected] = useState(false);
   const [showWarnings, setShowWarnings] = useState(false);
 
   useEffect(() => {
@@ -101,10 +103,6 @@ function App() {
     })
   }
 
-  useEffect(() => {
-    return;
-  }, [marks])
-
   // useEffect(() => {
   //   if (topTracks[currentSongInput-1] === songSearchTerms[currentSongInput]) {
   //     marks[currentSongInput] = "correct";
@@ -127,16 +125,23 @@ function App() {
     setShowWarnings(false);
   },[artistSearchTerm])
 
+  useEffect(() => {
+    setPreviousArtistSelected(previousArtists.includes(artistSearchTerm));
+  },[artistSearchTerm])
+
   function handleSubmit(e) {
     e.preventDefault();
     // alert("Quack");
     setShowWarnings(true);
-    if (!(containsBlanks || containsDuplicates)) {
+    if (!(containsBlanks || containsDuplicates || previousArtistSelected)) {
       // Insert code for marking
-      alert("Now marking");
+      // alert("Now marking");
       markAnswers();
+      setPreviousArtists(prev => [...prev, artistSearchTerm]);
     }
   }
+
+  //  Add warning if artist or songs are not [top of] list of suggestions
 
   return (
     <form onSubmit={handleSubmit}>
@@ -145,7 +150,7 @@ function App() {
       {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
       <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} />
-      {showWarnings && <Warnings blanks={containsBlanks} dupes={containsDuplicates} />}
+      {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} />}
       <button type="submit">Submit</button>
     </form>
   )
