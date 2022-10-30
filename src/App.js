@@ -89,7 +89,7 @@ function App() {
     Object.keys(songSearchTerms).forEach(index => {
       // alert("index");
       setTimeout(() => {
-        console.log(index);
+        // console.log(index);
         if (topTracks[index-1] === songSearchTerms[index]) {
           setMarks(prev => ({...prev, [index]: "correct"}));
           setScore(prev => prev + 3);
@@ -138,6 +138,13 @@ function App() {
       // alert("Now marking");
       markAnswers();
       setPreviousArtists(prev => [...prev, artistSearchTerm]);
+      setTimeout(() => {
+        setArtistSearchTerm("");
+        setArtistSearchSuggestions([]);
+        setSongSearchTerms({1:"", 2: "", 3: "", 4: "", 5: ""});
+        setSongSearchSuggestions({1: [], 2: [], 3: [], 4: [], 5: []});
+        setMarks({1: "", 2: "", 3: "", 4: "", 5: ""});
+      }, 8000)
     }
   }
 
