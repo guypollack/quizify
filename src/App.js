@@ -32,10 +32,6 @@ function App() {
           setArtistId(items[0].id);
           return items;
         })
-        // .then(items => {
-        //   console.log(artistId);
-        //   return items;
-        // })
         .then(items => items.map(artist => artist.name))
         .then(artists => artists.slice(0,10))
         .then(reducedArtists => reducedArtists.filter((value, index, self) => self.indexOf(value) === index))
@@ -45,8 +41,7 @@ function App() {
   },[artistSearchTerm]);
 
   useEffect(() => {
-    // console.log(artistSearchSuggestions.length);
-    setShowArtistSuggestions(!(artistSearchSuggestions.length === 1 && artistSearchTerm === artistSearchSuggestions[0]));
+    setShowArtistSuggestions(!(artistSearchTerm === artistSearchSuggestions[0]));
   },[artistSearchTerm])
 
   useEffect(() => {
@@ -75,6 +70,8 @@ function App() {
 
   useEffect(() => {
     updateSongSearchSuggestions(currentSongInput);
+    // console.log(songSearchTerms[1], songSearchSuggestions[1][0], songSearchTerms[1] === songSearchSuggestions[1][0]);
+    Object.keys(showSongSuggestions).forEach(index => setShowSongSuggestions(prev => ({...prev, [index]: !(songSearchTerms[index] === songSearchSuggestions[index][0])})));
   },[songSearchTerms]);
 
   useEffect(() => {
@@ -84,7 +81,7 @@ function App() {
   return (
     <div>
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
-      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} />
+      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} />
     </div>
   )
 }
