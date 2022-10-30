@@ -80,7 +80,7 @@ function App() {
 
   useEffect(() => {
     setContainsBlanks([artistSearchTerm, ...Object.values(songSearchTerms)].includes(""));
-  })
+  },[artistSearchTerm,songSearchTerms]);
 
   function handleSubmit(e) {
     e.preventDefault();
