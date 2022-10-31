@@ -23,12 +23,12 @@ code {
 
 .input-form {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .input-form > div {
-  /* border: 1px solid black; */
-  margin: 0 40px;
+  /* border: 1px solid red; */
+  margin: 0 10px;
   background-color: #202020;
   padding: 10px 20px;
   border-radius: 5px;
@@ -38,17 +38,22 @@ code {
   background-color: #181818;
 }
 
-.artist-search > h2, .song-search-container > h2 {
+.artist-search > h2, .song-search-container h2 {
   margin-top: 0;
+}
+
+.intro {
+  margin-bottom: 30px;
 }
 
 .input-form button {
   font-family: "Circular Sp UI v3 T Black", sans-serif;
   height: 40px;
+  width: 155px;
   color: white;
   /* background-color: #1ED761; */
   background-color: #181818;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1.5px solid #767676;
 }
 
@@ -86,7 +91,6 @@ small {
 .artist-search > input {
   width: 200px;
 }
-
 
 .song-search {
   display: flex;
