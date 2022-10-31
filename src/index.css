@@ -22,6 +22,10 @@ input {
   font-family: "Circular Sp UI v3 T Med", sans-serif;
 }
 
+input:focus {
+  outline: none;
+}
+
 button {
   font-family: "Circular Sp UI v3 T Black", sans-serif;
 }
