@@ -151,3 +151,21 @@ small {
   background-color: #d73a1e; 
   transform: translateX(-60px);
 }
+
+.top-tracks {
+  margin-top: 80px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.top-tracks > p {
+  margin-bottom: 19px;
+}
+
+.top-tracks > p > span {
+  letter-spacing: 1px;
+}
+
+.top-tracks.show {
+  opacity: 1;
+}

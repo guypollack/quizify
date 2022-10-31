@@ -4,6 +4,7 @@ import './App.css';
 import { ArtistSearchContainer } from "./Components/ArtistSearch/ArtistSearchContainer";
 import { SongSearchContainer } from "./Components/SongSearch/SongSearchContainer";
 import { Warnings } from "./Components/Warnings/Warnings.js";
+import { TopTracks } from "./Components/TopTracks/TopTracks";
 import Spotify from "./Utilities/Spotify/Spotify.js";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
   const [containsDuplicates, setContainsDuplicates] = useState(true);
   const [previousArtistSelected, setPreviousArtistSelected] = useState(false);
   const [showWarnings, setShowWarnings] = useState(false);
+  const [showTopTracks, setShowTopTracks] = useState(false);
 
   useEffect(() => {
     Spotify.getAccessToken()
@@ -104,6 +106,9 @@ function App() {
         }
       }, 1000 * index);
     })
+    setTimeout(() => {
+      setShowTopTracks(true);
+    }, 6000)
   }
 
   useEffect(() => {
@@ -158,7 +163,8 @@ function App() {
         setSongSearchTerms({1:"", 2: "", 3: "", 4: "", 5: ""});
         setSongSearchSuggestions({1: [], 2: [], 3: [], 4: [], 5: []});
         setMarks({1: "", 2: "", 3: "", 4: "", 5: ""});
-      }, 8000)
+        setShowTopTracks(false);
+      }, 10000)
     }
   }
 
@@ -182,6 +188,7 @@ function App() {
       </div> */}
       <div className="submit-button-container">
         <button type="submit">CHECK MY ANSWERS</button>
+        <TopTracks data={topTracks} show={showTopTracks} />
       </div>
     </form>
   </div>
