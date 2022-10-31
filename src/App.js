@@ -12,6 +12,7 @@ function App() {
   const [showArtistSuggestions, setShowArtistSuggestions] = useState(true);
   const [artistId, setArtistId] = useState(null);
   const [previousArtists, setPreviousArtists] = useState([]);
+  const [isArtistValid, setIsArtistValid] = useState(false);
 
   const [topTracks, setTopTracks] = useState([]);
   const [marks, setMarks] = useState({1: "", 2: "", 3: "", 4: "", 5: ""});
@@ -21,6 +22,8 @@ function App() {
   const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
   const [showSongSuggestions, setShowSongSuggestions] = useState({1: true, 2: true, 3: true, 4: true, 5: true});
   const [currentSongInput, setCurrentSongInput] = useState(1);
+  const [areSongsValid, setAreSongsValid] = useState({1: false, 2: false, 3: false, 4: false, 5: false});
+  const [areAllSongsValid, setAreAllSongsValid] = useState(false);
 
   const [containsBlanks, setContainsBlanks] = useState(true);
   const [containsDuplicates, setContainsDuplicates] = useState(true);
@@ -42,8 +45,8 @@ function App() {
         .then(items => items.map(artist => artist.name))
         .then(artists => artists.slice(0,10))
         .then(reducedArtists => reducedArtists.filter((value, index, self) => self.indexOf(value) === index))
-        .then(dedupedArtists => dedupedArtists.filter(artistName => artistName.toLowerCase().includes(artistSearchTerm.toLowerCase())))
-        .then(refinedArtists => setArtistSearchSuggestions(refinedArtists));
+        // .then(dedupedArtists => dedupedArtists.filter(artistName => artistName.toLowerCase().includes(artistSearchTerm.toLowerCase())))
+        .then(dedupedArtists => setArtistSearchSuggestions(dedupedArtists));
     }
   },[artistSearchTerm]);
 
@@ -103,16 +106,6 @@ function App() {
     })
   }
 
-  // useEffect(() => {
-  //   if (topTracks[currentSongInput-1] === songSearchTerms[currentSongInput]) {
-  //     marks[currentSongInput] = "correct";
-  //   } else if (topTracks.includes(songSearchTerms[currentSongInput])) {
-  //     marks[currentSongInput] = "wrong-place";
-  //   } else {
-  //     marks[currentSongInput] = "incorrect";
-  //   }
-  // },[songSearchTerms]);
-
   useEffect(() => {
     setContainsBlanks([artistSearchTerm, ...Object.values(songSearchTerms)].includes(""));
   },[artistSearchTerm,songSearchTerms]);
@@ -129,11 +122,32 @@ function App() {
     setPreviousArtistSelected(previousArtists.includes(artistSearchTerm));
   },[artistSearchTerm])
 
+  useEffect(() => {
+    // console.log(artistSearchTerm);
+    // console.log(artistSearchSuggestions);
+    setIsArtistValid(artistSearchSuggestions.includes(artistSearchTerm))
+  },[artistSearchTerm],[artistSearchSuggestions]);
+
+  useEffect(() => {
+    Object.values(songSearchTerms).forEach((song, index) => {
+      Spotify.songSearch(song,artistSearchTerm)
+        .then(searchResults => searchResults.tracks.items)
+        .then(items => items.map(item => item.name))
+        .then(songNames => {
+          setAreSongsValid(prev => ({...prev, [index + 1]: songNames.includes(songSearchTerms[index + 1])}))
+        })
+      })
+    },[songSearchTerms,artistSearchTerm]);
+
+  useEffect(() => {
+    setAreAllSongsValid(Object.values(areSongsValid).every(value => value));
+  },[areSongsValid]);
+  
   function handleSubmit(e) {
     e.preventDefault();
     // alert("Quack");
     setShowWarnings(true);
-    if (!(containsBlanks || containsDuplicates || previousArtistSelected)) {
+    if (!(containsBlanks || containsDuplicates || previousArtistSelected || !isArtistValid || !areAllSongsValid)) {
       // Insert code for marking
       // alert("Now marking");
       markAnswers();
@@ -153,11 +167,12 @@ function App() {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Score: {score}</h1>
+      {/* <h2>Valid? {isArtistValid.toString()}  {areAllSongsValid.toString()}</h2> */}
       {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
       {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
       <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} />
-      {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} />}
+      {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
       <button type="submit">Submit</button>
     </form>
   )
