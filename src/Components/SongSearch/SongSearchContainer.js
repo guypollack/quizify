@@ -1,5 +1,4 @@
 import { SongSearch } from "./SongSearch.js";
-import "./SongSearchContainer.css";
 
 export function SongSearchContainer({searchTerms, setSearchTerms, searchSuggestions, currentSongInput, setCurrentSongInput, show, marks, disabled}) {
   function handleFocus({target}) {
@@ -13,7 +12,7 @@ export function SongSearchContainer({searchTerms, setSearchTerms, searchSuggesti
     }
   }
   return (
-    <div className="song-search">
+    <div className="song-search-container">
       <h3>Guess your Artist's Most Popular Tracks on Spotify</h3>
       <small>Note: Popularity is based on the total number of plays the track has had and how recent those plays are.<br />
         Songs that are being played a lot now will have a higher popularity than songs that were played a lot in the past.

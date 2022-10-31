@@ -1,5 +1,4 @@
 import { ArtistSearch } from "./ArtistSearch.js";
-import "./ArtistSearchContainer.css";
 
 export function ArtistSearchContainer({searchTerm, setSearchTerm, searchSuggestions, show}) {
   function handleChange({target}) {
@@ -11,7 +10,7 @@ export function ArtistSearchContainer({searchTerm, setSearchTerm, searchSuggesti
     }
   }
   return (
-    <div className="artist-search">
+    <div className="artist-search-container">
       <ArtistSearch searchTerm={searchTerm} searchSuggestions={searchSuggestions} show={show} onChange={handleChange} />
     </div>
   )

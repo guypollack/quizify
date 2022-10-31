@@ -34,3 +34,41 @@ small {
   font-family: "Circular Sp UI v3 T Light", sans-serif;
   font-size: 11.5px;
 }
+
+.artist-search-container {
+  width: fit-content;
+  color: blue;
+  position: relative;
+  left: 200px;
+  /* border: 1px solid black; */
+}
+
+.artist-search > input {
+  width: 500px;
+}
+
+.song-search-container {
+  width: fit-content;
+  color: blue;
+  position: relative;
+  left: 200px;
+  /* border: 1px solid black; */
+}
+
+.song-search > input {
+  width: 500px;
+  transition: background-color 1s;
+  margin-bottom: 20px;
+}
+
+.song-search > input.correct {
+  background-color: aquamarine;
+}
+
+.song-search > input.wrong-place {
+  background-color: lemonchiffon;
+}
+
+.song-search > input.incorrect {
+  background-color: crimson;
+}
