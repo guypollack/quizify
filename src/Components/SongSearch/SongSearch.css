@@ -1,6 +1,7 @@
 input {
   width: 500px;
   transition: background-color 1s;
+  margin-bottom: 20px;
 }
 
 .correct {
