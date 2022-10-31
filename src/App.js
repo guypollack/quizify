@@ -180,7 +180,9 @@ function App() {
       <div>
         {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
       </div>
-      <button type="submit">Submit</button>
+      <div>
+        <button type="submit">Check My Answers</button>
+      </div>
     </form>
   </div>
   )
