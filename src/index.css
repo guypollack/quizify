@@ -35,11 +35,18 @@ code {
 }
 
 .input-form button {
-  /* font-family: "Circular Sp UI v3 T Black", sans-serif; */
-  height: 30px;
-  background-color: aqua;
+  font-family: "Circular Sp UI v3 T Black", sans-serif;
+  height: 40px;
+  color: white;
+  /* background-color: #1ED761; */
+  background-color: #202020;
+  border-radius: 10px;
+  border: 1.5px solid #767676;
 }
 
+.input-form button:hover {
+  border: 1.5px solid rgb(202, 202, 202);
+}
 
 /* .testo>h3 {
   font-family: 'Times New Roman', Times, serif;

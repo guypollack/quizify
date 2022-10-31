@@ -177,9 +177,9 @@ function App() {
       <div>
         <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} disabled={!isArtistValid} />
       </div>
-      <div>
+      {/* <div>
         {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
-      </div>
+      </div> */}
       <div>
         <button type="submit">Check My Answers</button>
       </div>
