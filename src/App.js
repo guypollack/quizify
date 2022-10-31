@@ -163,16 +163,26 @@ function App() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+  <div className="flex-container">
+    <div>
       <h1>Score: {score}</h1>
       {/* <h2>Valid? {isArtistValid.toString()}  {areAllSongsValid.toString()}</h2> */}
       {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
       {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
-      <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
-      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} disabled={!isArtistValid} />
-      {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
+    </div>
+    <form className="input-form" onSubmit={handleSubmit}>
+      <div>
+        <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
+      </div>
+      <div>
+        <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} disabled={!isArtistValid} />
+      </div>
+      <div>
+        {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
+      </div>
       <button type="submit">Submit</button>
     </form>
+  </div>
   )
 }
 

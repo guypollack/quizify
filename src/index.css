@@ -14,6 +14,16 @@ code {
     monospace;
 }
 
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-form {
+  display: flex;
+
+}
+
 /* .testo>h3 {
   font-family: 'Times New Roman', Times, serif;
 } */
@@ -36,27 +46,27 @@ small {
 }
 
 .artist-search-container {
-  width: fit-content;
+  /* width: fit-content; */
   color: blue;
-  position: relative;
-  left: 200px;
+  /* position: relative; */
+  /* left: 200px; */
   /* border: 1px solid black; */
 }
 
 .artist-search > input {
-  width: 500px;
+  width: 200px;
 }
 
 .song-search-container {
-  width: fit-content;
+  /* width: fit-content; */
   color: blue;
-  position: relative;
-  left: 200px;
+  /* position: relative; */
+  /* left: 200px; */
   /* border: 1px solid black; */
 }
 
 .song-search > input {
-  width: 500px;
+  width: 400px;
   transition: background-color 1s;
   margin-bottom: 20px;
 }
