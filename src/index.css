@@ -87,17 +87,10 @@ small {
   width: 200px;
 }
 
-.song-search-container {
-  /* width: fit-content; */
-  /* color: blue; */
-  /* position: relative; */
-  /* left: 200px; */
-  /* border: 1px solid black; */
-}
 
 .song-search {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: baseline;
 }
 
@@ -107,7 +100,7 @@ small {
   margin-bottom: 20px;
 }
 
-.song-search > input.correct {
+/* .song-search > input.correct {
   background-color: aquamarine;
 }
 
@@ -117,7 +110,7 @@ small {
 
 .song-search > input.incorrect {
   background-color: crimson;
-}
+} */
 
 .tick-container, .squiggle-container, .cross-container {
   color: #181818;
@@ -129,10 +122,16 @@ small {
   justify-content: center;
   align-items: center;
   font-size: 12px;
+  opacity: 0;
+  transition: opacity 1s;
 }
 
 .tick-container > p, .squiggle-container > p, .cross-container > p {
   margin: 0;
+}
+
+.tick-container.show, .squiggle-container.show, .cross-container.show {
+  opacity: 1;
 }
 
 .tick-container {
@@ -141,8 +140,10 @@ small {
 
 .squiggle-container {
   background-color: #d7ac1e; 
+  transform: translateX(-30px);
 }
 
 .cross-container {
   background-color: #d73a1e; 
+  transform: translateX(-60px);
 }
