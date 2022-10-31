@@ -8,7 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: white;
-  background-color: #202020;
+  background-color: #181818;
 }
 
 code {
@@ -23,14 +23,21 @@ code {
 
 .input-form {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .input-form > div {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  margin: 0 40px;
+  background-color: #202020;
+  padding: 10px 20px;
 }
 
-.artist-search > h3, .song-search-container > h3 {
+.input-form > .submit-button-container {
+  background-color: #181818;
+}
+
+.artist-search > h2, .song-search-container > h2 {
   margin-top: 0;
 }
 
@@ -39,7 +46,7 @@ code {
   height: 40px;
   color: white;
   /* background-color: #1ED761; */
-  background-color: #202020;
+  background-color: #181818;
   border-radius: 10px;
   border: 1.5px solid #767676;
 }
@@ -48,7 +55,7 @@ code {
   border: 1.5px solid rgb(202, 202, 202);
 }
 
-/* .testo>h3 {
+/* .testo>h2 {
   font-family: 'Times New Roman', Times, serif;
 } */
 
