@@ -1,8 +1,10 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+    font-family: "Circular Sp UI v3 T Black", sans-serif;
+    letter-spacing: -0.5px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,4 +12,16 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* .testo>h3 {
+  font-family: 'Times New Roman', Times, serif;
+} */
+
+input {
+  font-family: "Circular Sp UI v3 T Med", sans-serif;
+}
+
+button {
+  font-family: "Circular Sp UI v3 T Black", sans-serif;
 }

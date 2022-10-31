@@ -2,7 +2,7 @@ import { styles } from "./ArtistSearchStyles.js"
 
 export function ArtistSearch({searchTerm, searchSuggestions, show, onChange}) {
   return (
-    <div>
+    <div class="testo">
       <h3>Artist Search</h3>
       <input autoComplete="off" type="text" list={show ? "artist-selection-data" : null} value={searchTerm} onChange={onChange} style={styles}></input>
 
