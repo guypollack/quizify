@@ -162,8 +162,6 @@ function App() {
     }
   }
 
-  //  Add warning if artist or songs are not [top of] list of suggestions
-
   return (
     <form onSubmit={handleSubmit}>
       <h1>Score: {score}</h1>
@@ -171,7 +169,7 @@ function App() {
       {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
       {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
       <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
-      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} />
+      <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} disabled={!isArtistValid} />
       {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
       <button type="submit">Submit</button>
     </form>

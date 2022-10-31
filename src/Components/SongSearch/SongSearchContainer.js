@@ -1,7 +1,7 @@
 import { SongSearch } from "./SongSearch.js";
 import "./SongSearchContainer.css";
 
-export function SongSearchContainer({searchTerms, setSearchTerms, searchSuggestions, currentSongInput, setCurrentSongInput, show, marks}) {
+export function SongSearchContainer({searchTerms, setSearchTerms, searchSuggestions, currentSongInput, setCurrentSongInput, show, marks, disabled}) {
   function handleFocus({target}) {
     setCurrentSongInput(Number(target.id));
   }
@@ -15,7 +15,7 @@ export function SongSearchContainer({searchTerms, setSearchTerms, searchSuggesti
   return (
     <div className="song-search">
       {[1,2,3,4,5].map(num => {
-        return <SongSearch show={show[num]} mark={marks[num]} key={num.toString()} inputNumber={num.toString()} searchTerm={searchTerms[num]} searchSuggestions={searchSuggestions[num]} onFocus={handleFocus} onChange={handleChange} />
+        return <SongSearch show={show[num]} mark={marks[num]} key={num.toString()} inputNumber={num.toString()} searchTerm={searchTerms[num]} searchSuggestions={searchSuggestions[num]} onFocus={handleFocus} onChange={handleChange} disabled={disabled} />
       })}
     </div>
   )
