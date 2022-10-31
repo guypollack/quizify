@@ -23,6 +23,7 @@ code {
 
 .input-form {
   display: flex;
+  justify-content: space-around;
 }
 
 .input-form > div {
@@ -34,7 +35,7 @@ code {
 }
 
 .input-form button {
-  font-family: "Circular Sp UI v3 T Black", sans-serif;
+  /* font-family: "Circular Sp UI v3 T Black", sans-serif; */
   height: 30px;
   background-color: aqua;
 }
@@ -45,7 +46,7 @@ code {
 } */
 
 input {
-  font-family: "Circular Sp UI v3 T Med", sans-serif;
+  font-family: "Circular Sp UI v3 T Black", sans-serif;
 }
 
 input:focus {
@@ -53,7 +54,7 @@ input:focus {
 }
 
 small {
-  font-family: "Circular Sp UI v3 T Light", sans-serif;
+  /* font-family: "Circular Sp UI v3 T Black", sans-serif; */
   font-size: 11.5px;
 }
 
