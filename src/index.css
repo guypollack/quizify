@@ -31,6 +31,7 @@ code {
   margin: 0 40px;
   background-color: #202020;
   padding: 10px 20px;
+  border-radius: 5px;
 }
 
 .input-form > .submit-button-container {
@@ -61,6 +62,8 @@ code {
 
 input {
   font-family: "Circular Sp UI v3 T Black", sans-serif;
+  outline: none;
+  border: none;
 }
 
 input:focus {
@@ -92,6 +95,12 @@ small {
   /* border: 1px solid black; */
 }
 
+.song-search {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
 .song-search > input {
   width: 400px;
   transition: background-color 1s;
@@ -108,4 +117,32 @@ small {
 
 .song-search > input.incorrect {
   background-color: crimson;
+}
+
+.tick-container, .squiggle-container, .cross-container {
+  color: #181818;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.tick-container > p, .squiggle-container > p, .cross-container > p {
+  margin: 0;
+}
+
+.tick-container {
+  background-color: #1ED760; 
+}
+
+.squiggle-container {
+  background-color: #d7ac1e; 
+}
+
+.cross-container {
+  background-color: #d73a1e; 
 }
