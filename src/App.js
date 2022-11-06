@@ -73,7 +73,7 @@ function App() {
         })
         .then(songs => songs.slice(0,10))
         .then(reducedSongs => reducedSongs.filter((value, index, self) => self.indexOf(value) === index))
-        .then(dedupedSongs => setSongSearchSuggestions(prev => ({...prev, [index]: dedupedSongs})));
+        .then(dedupedSongs => setSongSearchSuggestions(prev => ({...prev, [index]: [...dedupedSongs, ...topTracks.filter(track => !dedupedSongs.includes(track))]})));
     } else {
       setSongSearchSuggestions(prev => ({...prev, [index]: []}));
       // setSongSearchSuggestions(prev => ({...prev}));
@@ -139,7 +139,10 @@ function App() {
         .then(searchResults => searchResults.tracks.items)
         .then(items => items.map(item => item.name))
         .then(songNames => {
-          setAreSongsValid(prev => ({...prev, [index + 1]: songNames.includes(songSearchTerms[index + 1])}))
+          // console.log(songNames);
+          // console.log(index + 1, [...songNames, ...topTracks]);
+          // console.log([...songNames, ...topTracks].includes(songSearchTerms[index + 1]));
+          setAreSongsValid(prev => ({...prev, [index + 1]: [...songNames, ...topTracks].includes(songSearchTerms[index + 1])}))
         })
       })
     },[songSearchTerms,artistSearchTerm]);
