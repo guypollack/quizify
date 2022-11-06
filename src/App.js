@@ -66,7 +66,7 @@ function App() {
 
   function updateSongSearchSuggestions(index) {
     if (artistSearchTerm && songSearchTerms[index]) {
-      Spotify.songSearch(songSearchTerms[index],artistSearchTerm)
+      Spotify.songSearch(songSearchTerms[index].replace("'",""),artistSearchTerm)
         .then(searchResults => searchResults.tracks.items)
         .then(items => {
           return items.map(song => song.name)
@@ -135,7 +135,7 @@ function App() {
 
   useEffect(() => {
     Object.values(songSearchTerms).forEach((song, index) => {
-      Spotify.songSearch(song,artistSearchTerm)
+      Spotify.songSearch(song.replace("'",""),artistSearchTerm)
         .then(searchResults => searchResults.tracks.items)
         .then(items => items.map(item => item.name))
         .then(songNames => {
