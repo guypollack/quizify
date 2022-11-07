@@ -21,14 +21,23 @@ code {
   flex-direction: column;
 }
 
+.flex-container > div, .flex-container > form {
+  border: 1px solid red;
+}
+
+.score {
+  margin-left: 15px;
+}
+
 .input-form {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .input-form > div {
   /* border: 1px solid red; */
-  margin: 0 10px;
+  margin: 15px;
   background-color: #202020;
   padding: 10px 20px;
   border-radius: 5px;
@@ -176,9 +185,21 @@ small {
   justify-content: flex-start;
 }
 
+.artist-image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 5px;
+}
+
+.artist-image-container > p {
+  margin: 5px;
+}
+
 .artist-image {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   margin: 10px;
 }

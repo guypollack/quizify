@@ -219,7 +219,7 @@ function App() {
   return (
     <div className="flex-container">
       <div>
-        <h1>Score: {score}</h1>
+        <h1 className="score">Score: {score}</h1>
         {/* <h1>Current points: {currentScore}</h1> */}
         {/* <h2>Valid? {isArtistValid.toString()}  {areAllSongsValid.toString()}</h2> */}
         {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
