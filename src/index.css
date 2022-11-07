@@ -22,7 +22,7 @@ code {
 }
 
 .flex-container > div, .flex-container > form {
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .score {
