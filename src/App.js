@@ -175,6 +175,7 @@ function App() {
   
   function handleSubmit(e) {
     e.preventDefault();
+    document.getElementById("submit-button").disabled = true;
     // alert("Quack");
     setShowWarnings(true);
     if (!(containsBlanks || containsDuplicates || previousArtistSelected || !isArtistValid || !areAllSongsValid)) {
@@ -193,6 +194,7 @@ function App() {
         setMarks({1: "", 2: "", 3: "", 4: "", 5: ""});
         // setCurrentScore(0);
         setShowTopTracks(false);
+        document.getElementById("submit-button").disabled = false;
       }, 10000);
     }
   }
@@ -207,9 +209,9 @@ function App() {
   //   console.log(currentScore);
   // },[currentScore]);
 
-  useEffect(() => {
-    console.log(scores);
-  },[scores]);
+  // useEffect(() => {
+  //   console.log(scores);
+  // },[scores]);
 
 
   // useEffect(() => {
@@ -233,7 +235,7 @@ function App() {
           <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} disabled={!isArtistValid} />
         </div>
         <div className="submit-button-container">
-          <button type="submit">CHECK MY ANSWERS</button>
+          <button type="submit" id="submit-button">CHECK MY ANSWERS</button>
           {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
           <TopTracks data={topTracks} show={showTopTracks} />
         </div>
