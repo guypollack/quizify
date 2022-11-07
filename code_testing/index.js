@@ -37,7 +37,7 @@ const Spotify = {
   }
 };
 
-export default Spotify;
+// export default Spotify;
 
 
 
@@ -68,3 +68,13 @@ export default Spotify;
 // };
 
 // console.log(search("the mountain goats"));
+
+// console.log("A");
+
+let a = 1
+
+setTimeout(() => {
+  console.log(a);
+},1000)
+
+a++;

@@ -6,6 +6,7 @@ import { SongSearchContainer } from "./Components/SongSearch/SongSearchContainer
 import { Warnings } from "./Components/Warnings/Warnings.js";
 import { TopTracks } from "./Components/TopTracks/TopTracks";
 import Spotify from "./Utilities/Spotify/Spotify.js";
+import { ImagesContainer } from "./Components/Images/ImagesContainer.js"
 
 function App() {
   const [artistSearchTerm, setArtistSearchTerm] = useState("");
@@ -14,10 +15,13 @@ function App() {
   const [artistId, setArtistId] = useState(null);
   const [previousArtists, setPreviousArtists] = useState([]);
   const [isArtistValid, setIsArtistValid] = useState(false);
+  const [artistImages, setArtistImages] = useState([]);
 
   const [topTracks, setTopTracks] = useState([]);
   const [marks, setMarks] = useState({1: "", 2: "", 3: "", 4: "", 5: ""});
+  const [currentScore, setCurrentScore] = useState(0);
   const [score, setScore] = useState(0);
+  const [scores, setScores] = useState({});
 
   const [songSearchTerms, setSongSearchTerms] = useState({1:"", 2: "", 3: "", 4: "", 5: ""});
   const [songSearchSuggestions, setSongSearchSuggestions] = useState({1: [], 2: [], 3: [], 4: [], 5: []});
@@ -97,18 +101,29 @@ function App() {
         // console.log(index);
         if (topTracks[index-1] === songSearchTerms[index]) {
           setMarks(prev => ({...prev, [index]: "correct"}));
+          // setCurrentScore(prev => prev + 3);
           setScore(prev => prev + 3);
         } else if (topTracks.includes(songSearchTerms[index])) {
           setMarks(prev => ({...prev, [index]: "wrong-place"}));
+          // setCurrentScore(prev => prev + 1);
           setScore(prev => prev + 1);
         } else {
           setMarks(prev => ({...prev, [index]: "incorrect"}));
         }
+        // console.log("XYZ  "+currentScore);
       }, 1000 * index);
     })
     setTimeout(() => {
       setShowTopTracks(true);
     }, 6000)
+  }
+
+  function addArtistImage(artist) {
+    Spotify.search("artist", artist)
+    .then(searchResults => searchResults.artists.items)
+    .then(items => {
+      setArtistImages(prev => [...prev, { url: items[0].images[0].url, name: artistSearchTerm }]);
+    })
   }
 
   useEffect(() => {
@@ -150,6 +165,13 @@ function App() {
   useEffect(() => {
     setAreAllSongsValid(Object.values(areSongsValid).every(value => value));
   },[areSongsValid]);
+
+  useEffect(() => {
+    setScores(prev => {
+      const previousScore = Object.values(prev).slice(0,previousArtists.length).reduce((total, current) => total + current, 0);
+      return {...prev, [previousArtists.length]: score - previousScore};
+    })
+  },[score, previousArtists]);
   
   function handleSubmit(e) {
     e.preventDefault();
@@ -159,6 +181,9 @@ function App() {
       // Insert code for marking
       // alert("Now marking");
       markAnswers();
+      setTimeout(() => {
+        addArtistImage(artistSearchTerm);
+      }, 7000);
       setPreviousArtists(prev => [...prev, artistSearchTerm]);
       setTimeout(() => {
         setArtistSearchTerm("");
@@ -166,35 +191,59 @@ function App() {
         setSongSearchTerms({1:"", 2: "", 3: "", 4: "", 5: ""});
         setSongSearchSuggestions({1: [], 2: [], 3: [], 4: [], 5: []});
         setMarks({1: "", 2: "", 3: "", 4: "", 5: ""});
+        // setCurrentScore(0);
         setShowTopTracks(false);
-      }, 10000)
+      }, 10000);
     }
   }
 
+  // function tester() {
+  //   setTimeout(() => {
+  //     console.log(currentScore);
+  //   }, 4000)
+  // }
+
+  // useEffect(() => {
+  //   console.log(currentScore);
+  // },[currentScore]);
+
+  useEffect(() => {
+    console.log(scores);
+  },[scores]);
+
+
+  // useEffect(() => {
+  //   console.log(artistImages);
+  // },[artistImages]);
+
   return (
-  <div className="flex-container">
-    <div>
-      <h1>Score: {score}</h1>
-      {/* <h2>Valid? {isArtistValid.toString()}  {areAllSongsValid.toString()}</h2> */}
-      {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
-      {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
+    <div className="flex-container">
+      <div>
+        <h1>Score: {score}</h1>
+        {/* <h1>Current points: {currentScore}</h1> */}
+        {/* <h2>Valid? {isArtistValid.toString()}  {areAllSongsValid.toString()}</h2> */}
+        {/* <h1>Contains Blanks: {containsBlanks.toString()}</h1> */}
+        {/* <h1>Contains Duplicates: {containsDuplicates.toString()}</h1> */}
+      </div>
+      <form className="input-form" onSubmit={handleSubmit}>
+        <div>
+          <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
+        </div>
+        <div>
+          <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} disabled={!isArtistValid} />
+        </div>
+        {/* <div>
+          {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
+        </div> */}
+        <div className="submit-button-container">
+          <button type="submit">CHECK MY ANSWERS</button>
+          <TopTracks data={topTracks} show={showTopTracks} />
+        </div>
+      </form>
+      <div className="images-container">
+        <ImagesContainer imageData={artistImages} scores={scores} />
+      </div>
     </div>
-    <form className="input-form" onSubmit={handleSubmit}>
-      <div>
-        <ArtistSearchContainer searchTerm={artistSearchTerm} setSearchTerm={setArtistSearchTerm} searchSuggestions={artistSearchSuggestions} show={showArtistSuggestions} />
-      </div>
-      <div>
-        <SongSearchContainer searchTerms={songSearchTerms} setSearchTerms={setSongSearchTerms} searchSuggestions={songSearchSuggestions} currentSongInput={currentSongInput} setCurrentSongInput={setCurrentSongInput} show={showSongSuggestions} marks={marks} disabled={!isArtistValid} />
-      </div>
-      {/* <div>
-        {showWarnings && <Warnings artist={artistSearchTerm} blanks={containsBlanks} dupes={containsDuplicates} previousArtist={previousArtistSelected} artistValid={isArtistValid} songsValid={areAllSongsValid} />}
-      </div> */}
-      <div className="submit-button-container">
-        <button type="submit">CHECK MY ANSWERS</button>
-        <TopTracks data={topTracks} show={showTopTracks} />
-      </div>
-    </form>
-  </div>
   )
 }
 

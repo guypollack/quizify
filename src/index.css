@@ -169,3 +169,16 @@ small {
 .top-tracks.show {
   opacity: 1;
 }
+
+.images-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.artist-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px;
+}
