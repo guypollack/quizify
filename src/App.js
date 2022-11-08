@@ -175,12 +175,12 @@ function App() {
   
   function handleSubmit(e) {
     e.preventDefault();
-    document.getElementById("submit-button").disabled = true;
     // alert("Quack");
     setShowWarnings(true);
     if (!(containsBlanks || containsDuplicates || previousArtistSelected || !isArtistValid || !areAllSongsValid)) {
       // Insert code for marking
       // alert("Now marking");
+      document.getElementById("submit-button").disabled = true;
       markAnswers();
       setTimeout(() => {
         addArtistImage(artistSearchTerm);
