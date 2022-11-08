@@ -1,7 +1,7 @@
 import { SongSearch } from "../../Components/SongSearch/SongSearch";
 
 const clientId = "418cbefe2991437ca105b8e953755b2b";
-const redirectUri = "quizify-music.surge.sh"; //"https://quizify-music.netlify.app"; //"http://localhost:3000/";
+const redirectUri = "http://quizify-music.surge.sh"; //"https://quizify-music.netlify.app"; //"http://localhost:3000/";
 let accessToken;
 
 const Spotify = {
