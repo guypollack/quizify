@@ -184,7 +184,7 @@ function App() {
       markAnswers();
       setTimeout(() => {
         addArtistImage(artistSearchTerm);
-      }, 6900);
+      }, 6500);
       setPreviousArtists(prev => [...prev, artistSearchTerm]);
       setTimeout(() => {
         setArtistSearchTerm("");
