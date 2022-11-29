@@ -1,11 +1,9 @@
 @font-face {
   font-family: "Circular Sp UI v3 T Black";
   src: url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.eot");
-  src: url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.eot?#iefix") format("embedded-opentype"),
-  url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.woff2") format("woff2"),
-  url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.woff") format("woff"),
-  url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.ttf") format("truetype"),
-  url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.svg#Circular Sp UI v3 T Black") format("svg"); }
+  src: url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.woff2") format("woff2"),
+  url("//db.onlinewebfonts.com/t/596409e7700d7e9cd94f9df5a8b1b477.woff") format("woff"); 
+}
 
 body {
   margin: 0;
