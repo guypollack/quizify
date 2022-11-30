@@ -16,6 +16,7 @@ function App() {
   const [previousArtists, setPreviousArtists] = useState([]);
   const [isArtistValid, setIsArtistValid] = useState(false);
   const [artistImages, setArtistImages] = useState([]);
+  const [imageVisibility, setImageVisibility] = useState([]);
 
   const [topTracks, setTopTracks] = useState([]);
   const [marks, setMarks] = useState({1: "", 2: "", 3: "", 4: "", 5: ""});
@@ -95,24 +96,30 @@ function App() {
   },[artistSearchTerm]);
 
   function markAnswers() {
+    let artistScore = 0;
     Object.keys(songSearchTerms).forEach(index => {
       // alert("index");
-      setTimeout(() => {
-        // console.log(index);
-        if (topTracks[index-1] === songSearchTerms[index]) {
+      // console.log(index);
+      if (topTracks[index-1] === songSearchTerms[index]) {
+        artistScore += 3;
+        setTimeout(() => {
           setMarks(prev => ({...prev, [index]: "correct"}));
-          // setCurrentScore(prev => prev + 3);
           setScore(prev => prev + 3);
-        } else if (topTracks.includes(songSearchTerms[index])) {
+        }, 1000 * index);
+      } else if (topTracks.includes(songSearchTerms[index])) {
+        artistScore += 1;
+        setTimeout(() => {
           setMarks(prev => ({...prev, [index]: "wrong-place"}));
-          // setCurrentScore(prev => prev + 1);
           setScore(prev => prev + 1);
-        } else {
-          setMarks(prev => ({...prev, [index]: "incorrect"}));
-        }
-        // console.log("XYZ  "+currentScore);
-      }, 1000 * index);
+        }, 1000 * index);
+      } else {
+        setTimeout(() => {
+        setMarks(prev => ({...prev, [index]: "incorrect"}));
+        }, 1000 * index);
+      }
     })
+    // console.log(artistScore);
+    // setArtistResults(prev => ({...prev[artistSearchTerm], score: artistScore})); //Updates the nested "score" property within the artist's name property of the artistResults
     setTimeout(() => {
       setShowTopTracks(true);
     }, 6000)
@@ -124,6 +131,13 @@ function App() {
     .then(items => {
       setArtistImages(prev => [...prev, { url: items[0].images[0].url, name: artistSearchTerm }]);
     })
+  }
+
+  function queueImageVisibility() {
+    setImageVisibility(prev => [...prev, "hidden"]);
+    setTimeout(() => {
+      setImageVisibility(prev => [...prev.slice(0,prev.length-1),"visible"]);
+    },7000);
   }
 
   useEffect(() => {
@@ -181,10 +195,17 @@ function App() {
       // Insert code for marking
       // alert("Now marking");
       document.getElementById("submit-button").disabled = true;
+      addArtistImage(artistSearchTerm);
+      queueImageVisibility();
+      // setImageVisibility(prev => [...prev, "hidden"]);
       markAnswers();
-      setTimeout(() => {
-        addArtistImage(artistSearchTerm);
-      }, 6500);
+      // setTimeout(() => {
+      //   addArtistImage(artistSearchTerm);
+      // }, 6500);
+      // setTimeout(() => {
+      //   alert("Now showing latest image")
+      // }, 7000);
+      
       setPreviousArtists(prev => [...prev, artistSearchTerm]);
       setTimeout(() => {
         setArtistSearchTerm("");
@@ -241,7 +262,7 @@ function App() {
         </div>
       </form>
       <div className="images-container">
-        <ImagesContainer imageData={artistImages} scores={scores} />
+        <ImagesContainer imageData={artistImages} scores={scores} imageVisibility={imageVisibility} />
       </div>
     </div>
   )
