@@ -198,6 +198,11 @@ small {
   justify-content: center;
   align-items: center;
   margin: 15px 5px;
+  visibility: visible;
+}
+
+.artist-image-container.hidden {
+  visibility: hidden;
 }
 
 .artist-image-container > p {
