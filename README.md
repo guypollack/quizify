@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+# 🎧 Quizify - A Music Quiz Using Spotify API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is Quizify?
 
-## Available Scripts
+Quizify is an interactive music quiz app built by Guy Pollack, using React, HTML, CSS and JavaScript.  
+It was created as a project to practice using React and JavaScript's Fetch API, and for users to have fun by testing their knowledge of their favourite artists!
 
-In the project directory, you can run:
+## How Do I Play?
 
-### `npm start`
+1. You can play by visiting [http://quizify-music.surge.sh/](http://quizify-music.surge.sh/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. The app will ask you to sign in to Spotify. NB - in order to access the app your Spotify account must be added to an approved list by Guy Pollack. Please contact him if you would like to add your account to this list.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. Once you have signed in, enter the name of an artist in the 'Choose an Artist' box and confirm your selection by clicking on the correct name from the dropdown that appears. The dropdown options will change as you type, as the app sends requests to Spotify's API to find your chosen artist.
 
-### `npm test`
+4. Then enter your guesses of the artist's top 5 tracks on Spotify in the appropriate fields, and confirm your selections by clicking on the correct track names from the dropdowns. Once again, the dropdown options will change as you type, as the app sends requests to the API. Please note, an artist's top 5 tracks are not necessarily their 5 most played songs on Spotify; there is a note in the app explaining this in more detail.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. When you are happy with your selections, click 'CHECK MY ANSWERS' and the app will mark your guesses in the following way:
+  * 3 points for guessing a _correct_ track in the _correct_ position in the artist's top 5
+  * 1 point for guessing a _correct_ track in the _wrong_ position in the artist's top 5
+  * 0 points for guessing a _wrong_ track
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+6. The app will display your score for the current artist out of a maximum of 15 points, as well as keeping track of your total score at the top of the page.
