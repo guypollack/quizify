@@ -9,7 +9,7 @@ It was created as a project to practice using React and JavaScript's Fetch API, 
 
 1. You can play by visiting [http://quizify-music.surge.sh/](http://quizify-music.surge.sh/).
 
-2. The app will ask you to sign in to Spotify. NB - in order to access the app your Spotify account must be added to an approved list by Guy Pollack. Please contact him if you would like to add your account to this list.
+2. To use the app, sign in to Spotify when prompted using these details - Username: quizify_user@guypollack.com; Password: LetMePlay.
 
 3. Once you have signed in, enter the name of an artist in the 'Choose an Artist' box and confirm your selection by clicking on the correct name from the dropdown that appears. The dropdown options will change as you type, as the app sends requests to Spotify's API to find your chosen artist.
 
